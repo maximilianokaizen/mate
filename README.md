@@ -45,7 +45,6 @@ cd mate
 
 ```bash
 npm i 
-yarn i
 ```
 
 #### 3. Build and Run the Services
