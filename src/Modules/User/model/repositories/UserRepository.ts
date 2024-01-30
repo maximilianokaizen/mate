@@ -101,4 +101,21 @@ export class UserRepository {
       return { success: false };
     }
   }
+
+  async getByEmail(email: string): Promise<OneUserInterface> {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { email, active: true }
+      });
+
+      if (user) {
+        return { success: true, user };
+      } else {
+        return { success: false };
+      }
+    } catch (error) {
+      this.logger.error(error);
+      return { success: false, message: 'Cannot get user by email' };
+    }
+  }
 }

@@ -121,4 +121,21 @@ export class UsersController {
       res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
     }
   }
+
+  async authenticateUser(req: Request, res: Response) {
+    try {
+      const email = new Email(req.body.email);
+      const password = req.body.password;
+      const response = await this.userService.authenticate(email, password);
+
+      if (response.success) {
+        res.status(HttpResponseCodes.OK).json(response);
+      } else {
+        res.status(HttpResponseCodes.UNAUTHORIZED).json(response);
+      }
+    } catch (error) {
+      this.logger.error(error);
+      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+    }
+  }
 }

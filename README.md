@@ -11,6 +11,17 @@ curl -X POST http://localhost:3030/v1/users -H "Content-Type: application/json" 
 "createdAt": "2022-01-30T12:00:00Z"
 }'
 
+curl -X POST http://localhost:3030/v1/users -H "Content-Type: application/json" -d '{
+"uuid": "",
+"name": "Juan Maximiliano",
+"lastName": "Rossi",
+"userName": "maxirossi",
+"email": "maximilianokaizen@gmail.com",
+"password": "P@ssw0rd123",
+"active": true,
+"createdAt": ""
+}'
+
 ## Get all users CURL
 
 curl -X GET http://localhost:3030/v1/users
@@ -30,4 +41,11 @@ curl -X PUT http://localhost:3030/v1/users/2e771f88-eff2-45da-8d39-090365dbc09d 
 "lastName": "Doe",
 "password": "P@ssw0rd123",
 "active": false
+}'
+
+## Auth User
+
+curl -X POST http://localhost:3030/v1/users/authenticate -H "Content-Type: application/json" -d '{
+"email": "maximilianokaizen@gmail.com",
+"password": "P@ssw0rd123"
 }'

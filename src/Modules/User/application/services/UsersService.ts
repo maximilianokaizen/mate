@@ -13,6 +13,8 @@ import { UserRepository } from '../../model/repositories/UserRepository';
 import WinstonLogger from '../../../Shared/infrastructure/WinstoneLogger';
 import Logger from '../../../Shared/domain/Logger';
 import { Constants } from '../../Shared/constants';
+const bcrypt = require('bcrypt');
+
 export class UsersService {
   private readonly userRepository: UserRepository;
   private readonly logger: Logger;
@@ -78,5 +80,24 @@ export class UsersService {
 
   async delete(uuid: string): Promise<any> {
     return await this.userRepository.delete(uuid);
+  }
+
+  async authenticate(email: Email, password: string): Promise<InternalResponse> {
+    try {
+      const user = await this.userRepository.getByEmail(email.value);
+      if (!user.success) {
+        return { success: false, message: 'User not found' };
+      }
+
+      const validPassword = await bcrypt.compare(password, user.user?.password);
+      if (!validPassword) {
+        return { success: false, message: 'Invalid password' };
+      }
+
+      return { success: true, message: 'Authentication successful' };
+    } catch (error) {
+      this.logger.error(error);
+      return { success: false, message: 'Authentication failed' };
+    }
   }
 }

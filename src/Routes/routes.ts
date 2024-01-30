@@ -21,5 +21,5 @@ router.get('/v1/users', (req: Request, res: Response) => usersController.getAllU
 router.get('/v1/users/:userId', (req: Request, res: Response) => usersController.getUserById(req, res));
 router.put('/v1/users/:userId', (req: Request, res: Response) => usersController.updateUser(req, res));
 router.delete('/v1/users/:userId', (req: Request, res: Response) => usersController.deleteUser(req, res));
-
+router.post('/v1/users/authenticate', (req: Request, res: Response) => usersController.authenticateUser(req, res));
 export default router;
