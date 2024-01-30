@@ -55,11 +55,7 @@ export class UsersService {
   }
 
   async getById(uuid: string): Promise<any> {
-    /*
-        return this.prisma.user.findUnique({
-            where: { id: userId }
-        });
-         */
+    return await this.userRepository.getUserById(uuid);
   }
 
   async update(userId: number, userData: any): Promise<any> {

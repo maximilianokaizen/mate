@@ -1,7 +1,7 @@
 ## Create User CURL
 
 curl -X POST http://localhost:3030/v1/users -H "Content-Type: application/json" -d '{
-"uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+"uuid": "",
 "name": "John",
 "userName": "johndoe123",
 "lastName": "Doe",
@@ -14,3 +14,7 @@ curl -X POST http://localhost:3030/v1/users -H "Content-Type: application/json" 
 ## Get all users CURL
 
 curl -X GET http://localhost:3030/v1/users
+
+## Ger user by UUID
+
+curl -X GET http://localhost:3030/v1/users/e2fbadaf-7f56-4a47-86d8-439e655369d8

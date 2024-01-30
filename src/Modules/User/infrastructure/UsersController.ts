@@ -62,15 +62,23 @@ export class UsersController {
     const response = await this.userService.getAll(page);
     res.status(HttpResponseCodes.OK).send({
       status: GeneralConstants.STATUS_OK,
-      users : response.users,
+      users: response.users
     });
   }
 
   async getUserById(req: Request, res: Response) {
-    res.status(200).send({
-      status: 'OK',
-      message: 'Detalles del usuario.'
-    });
+    try {
+      const uuidParam = req.params.userId;
+      const response = await this.userService.getById(uuidParam);
+      if (response.success) {
+        res.status(HttpResponseCodes.OK).json(response);
+      } else {
+        res.status(HttpResponseCodes.BAD_REQUEST).json(response);
+      }
+    } catch (error) {
+      this.logger.error(error);
+      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+    }
   }
 
   async updateUser(req: Request, res: Response) {

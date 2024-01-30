@@ -4,6 +4,7 @@ import Logger from '../../../Shared/domain/Logger';
 import WinstonLogger from '../../../Shared/infrastructure/WinstoneLogger';
 import { InternalResponse } from '../../../Shared/dto/InternalResponse';
 import { UsersInterface } from '../interfaces/UsersInterface';
+import { OneUserInterface } from '../interfaces/OneUserInterface';
 export class UserRepository {
   private prisma: PrismaClient;
   private readonly logger: Logger;
@@ -28,6 +29,9 @@ export class UserRepository {
     try {
       const skip = (page - 1) * perPage;
       const users = await this.prisma.user.findMany({
+        where: {
+          active: true
+        },
         skip,
         take: perPage
       });
@@ -39,12 +43,22 @@ export class UserRepository {
     }
   }
 
-  async getUserById(uuid: string): Promise<any> {
-    /*
-    return this.prisma.user.findUnique({
-      where: { uuid: uuid }
-    });
-    */
+  async getUserById(uuid: string): Promise<OneUserInterface> {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: {
+          uuid: uuid
+        }
+      });
+      if (user) {
+        return { success: true, user };
+      } else {
+        return { success: false };
+      }
+    } catch (error) {
+      this.logger.error(error);
+      return { success: false, message: 'Cannot get user' };
+    }
   }
 
   async updateUser(userId: number, userData: UserInterface): Promise<any> {
