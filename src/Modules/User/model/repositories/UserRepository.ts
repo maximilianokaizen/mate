@@ -47,7 +47,7 @@ export class UserRepository {
       const user = await this.prisma.user.findUnique({
         where: {
           uuid: uuid,
-          active : true,
+          active: true
         }
       });
       if (user) {
@@ -64,13 +64,13 @@ export class UserRepository {
   async update(uuid: string, userData: UserInterface): Promise<InternalResponse> {
     try {
       const user = await this.prisma.user.findUnique({
-        where: { uuid: uuid, active: true },
+        where: { uuid: uuid, active: true }
       });
       if (user) {
         const { id, ...updatedData } = userData;
         await this.prisma.user.update({
           where: { uuid: uuid },
-          data: updatedData,
+          data: updatedData
         });
         return { success: true, message: 'User updated successfully' };
       } else {
@@ -85,12 +85,12 @@ export class UserRepository {
   async delete(uuid: string): Promise<InternalResponse> {
     try {
       const user = await this.prisma.user.findUnique({
-        where: { uuid: uuid },
+        where: { uuid: uuid }
       });
       if (user) {
         await this.prisma.user.update({
           where: { uuid: uuid },
-          data: { active: false, deletedAt: new Date() },
+          data: { active: false, deletedAt: new Date() }
         });
         return { success: true };
       } else {

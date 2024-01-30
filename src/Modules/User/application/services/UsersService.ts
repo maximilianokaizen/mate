@@ -64,7 +64,7 @@ export class UsersService {
       if (existingUser.success) {
         const updatedUserData: UserInterface = {
           ...existingUser.user,
-          ...userData,
+          ...userData
         };
         return await this.userRepository.update(uuid, updatedUserData);
       } else {

@@ -92,7 +92,7 @@ export class UsersController {
         name,
         lastName,
         password,
-        active,
+        active
       });
       if (response.success) {
         res.status(HttpResponseCodes.OK).json(response);
@@ -104,7 +104,6 @@ export class UsersController {
       res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
     }
   }
-  
 
   async deleteUser(req: Request, res: Response) {
     try {
@@ -116,8 +115,8 @@ export class UsersController {
         res.status(HttpResponseCodes.BAD_REQUEST).json(response);
       }
     } catch (error) {
-       this.logger.error(error);
-       res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      this.logger.error(error);
+      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
     }
   }
 }
