@@ -27,7 +27,7 @@ A Minimalist Boilerplate for Services/Microservices, Utilizing TypeScript, DDD, 
 ```bash
 Docker
 Docker Composer
-Node, Npm
+Node LTS, >= 18, NPM
 ```
 
 ### Local Development Setup
