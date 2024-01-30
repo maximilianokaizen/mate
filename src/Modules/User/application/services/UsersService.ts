@@ -5,7 +5,6 @@ import { Email } from '../../../Shared/domain/value-object/Email';
 import { UserName } from '../../../Shared/domain/value-object/User/UserName';
 import { Active } from '../../../Shared/domain/value-object/User/Active';
 import { CreatedAt } from '../../../Shared/domain/value-object/CreatedAt';
-import { UserPassword } from '../../../Shared/domain/value-object/User/UserPassword';
 import { Page } from '../../../Shared/domain/value-object/Page';
 import { InternalResponse } from '../../../Shared/dto/InternalResponse';
 import { UserInterface } from '../../model/interfaces/UserInterface';
