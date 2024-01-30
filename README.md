@@ -55,9 +55,11 @@ docker-compose up --build -d
 
 #### 4. Create Database and run migrations
 
+```bash
 npx prisma init
 npx prisma generate 
 npx prisma migrate dev 
+```
 
 #### 5. Run mate with 
 
