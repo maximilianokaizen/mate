@@ -1,0 +1,6 @@
+FROM node:19-slim
+
+WORKDIR /src
+
+COPY package.json package-lock.json ./
+RUN npm install
