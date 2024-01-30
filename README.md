@@ -51,7 +51,6 @@ npm i
 
 ```bash
 docker-compose up --build -d
-yarn i
 ```
 
 #### 4. Create Database and run migrations
