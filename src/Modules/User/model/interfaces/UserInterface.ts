@@ -8,6 +8,6 @@ export interface UserInterface {
   password: string;
   active: boolean;
   createdAt: Date | string;
-  deletedAt?: Date | string;
-  modifiedAt?: Date | string;
+  deletedAt?: Date | string | null;
+  modifiedAt?: Date | string | null;
 }

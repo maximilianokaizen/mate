@@ -6,13 +6,13 @@ import { UserName } from '../../../Shared/domain/value-object/User/UserName';
 import { Active } from '../../../Shared/domain/value-object/User/Active';
 import { CreatedAt } from '../../../Shared/domain/value-object/CreatedAt';
 import { UserPassword } from '../../../Shared/domain/value-object/User/UserPassword';
+import { Page } from '../../../Shared/domain/value-object/Page';
 import { InternalResponse } from '../../../Shared/dto/InternalResponse';
-import { Request, Response } from 'express';
 import { UserInterface } from '../../model/interfaces/UserInterface';
 import { UserRepository } from '../../model/repositories/UserRepository';
 import WinstonLogger from '../../../Shared/infrastructure/WinstoneLogger';
 import Logger from '../../../Shared/domain/Logger';
-
+import { Constants } from '../../Shared/constants';
 export class UsersService {
   private readonly userRepository: UserRepository;
   private readonly logger: Logger;
@@ -49,10 +49,9 @@ export class UsersService {
     }
   }
 
-  async getAll(): Promise<any> {
-    /*
-        return this.prisma.user.findMany();
-        */
+  async getAll(page: Page): Promise<any> {
+    const perPage = Constants.RECORDS_PER_PAGE;
+    return await this.userRepository.getAll(page.getValue(), perPage);
   }
 
   async getById(uuid: string): Promise<any> {

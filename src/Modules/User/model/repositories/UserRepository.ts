@@ -3,7 +3,7 @@ import { UserInterface } from '../../model/interfaces/UserInterface';
 import Logger from '../../../Shared/domain/Logger';
 import WinstonLogger from '../../../Shared/infrastructure/WinstoneLogger';
 import { InternalResponse } from '../../../Shared/dto/InternalResponse';
-
+import { UsersInterface } from '../interfaces/UsersInterface';
 export class UserRepository {
   private prisma: PrismaClient;
   private readonly logger: Logger;
@@ -24,10 +24,19 @@ export class UserRepository {
     }
   }
 
-  async getAllUsers(): Promise<any> {
-    /*
-    return this.prisma.user.findMany();
-    */
+  async getAll(page: number, perPage: number): Promise<UsersInterface> {
+    try {
+      const skip = (page - 1) * perPage;
+      const users = await this.prisma.user.findMany({
+        skip,
+        take: perPage
+      });
+
+      return { success: true, message: 'Users retrieved successfully', users: users };
+    } catch (error) {
+      this.logger.error(error);
+      return { success: false, message: 'Error retrieving users' };
+    }
   }
 
   async getUserById(uuid: string): Promise<any> {

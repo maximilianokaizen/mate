@@ -9,10 +9,12 @@ import { UserPassword } from '../../Shared/domain/value-object/User/UserPassword
 import { Active } from '../../Shared/domain/value-object/User/Active';
 import { Uuid } from '../../Shared/domain/value-object/Uuid';
 import { CreatedAt } from '../../Shared/domain/value-object/CreatedAt';
+import { Page } from '../../Shared/domain/value-object/Page';
 import { HttpResponseCodes } from '../../Shared/HttpResponseCodes';
 import { UsersService } from '../application/services/UsersService';
 import Logger from '../../Shared/domain/Logger';
 import WinstonLogger from '../../Shared/infrastructure/WinstoneLogger';
+import { GeneralConstants } from '../../Shared/constants';
 
 export class UsersController {
   private readonly userService: UsersService;
@@ -55,9 +57,12 @@ export class UsersController {
   }
 
   async getAllUsers(req: Request, res: Response) {
-    res.status(200).send({
-      status: 'OK',
-      message: 'Lista de usuarios.'
+    const pageParam = req.query.page;
+    const page = new Page(parseInt(pageParam as string) || 1);
+    const response = await this.userService.getAll(page);
+    res.status(HttpResponseCodes.OK).send({
+      status: GeneralConstants.STATUS_OK,
+      users : response.users,
     });
   }
 
