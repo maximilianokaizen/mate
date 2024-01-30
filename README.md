@@ -1,5 +1,28 @@
+# Mate
 
-# Requirements
+A Minimalist Boilerplate for Services/Microservices, Utilizing TypeScript, DDD, and Hexagonal Architecture.
+
+## Authors
+
+- [@maximilianokaizen](https://www.github.com/maximilianokaizen)
+
+## Features
+
+- DDD Based / Hexagonal Architecture
+- Object Values
+- Application / Domain / Infrastructure layers
+- Controllers, Services and Repositories
+- Test E2E (JEST)
+- Prettier as Linter
+- TS Std Configuration
+- Prisma as ORM
+- Winston for logs
+- Nodemon
+- DockerFile and docker-compose
+- Postgress as relational DB 
+- Users module 
+
+## Requirements
 
 ```bash
 Docker
