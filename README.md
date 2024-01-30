@@ -1,4 +1,4 @@
-# Mate
+# Mate ![icons8-mate-32](https://github.com/maximilianokaizen/mate/assets/148482605/c830d9f1-1ce1-4a54-82e4-706ae1a4d5f5)
 
 A Minimalist Boilerplate for Services/Microservices, Utilizing TypeScript, DDD, and Hexagonal Architecture.
 
