@@ -35,7 +35,6 @@ export class UserRepository {
         skip,
         take: perPage
       });
-
       return { success: true, message: 'Users retrieved successfully', users: users };
     } catch (error) {
       this.logger.error(error);
@@ -47,7 +46,8 @@ export class UserRepository {
     try {
       const user = await this.prisma.user.findUnique({
         where: {
-          uuid: uuid
+          uuid: uuid,
+          active : true,
         }
       });
       if (user) {
@@ -61,21 +61,44 @@ export class UserRepository {
     }
   }
 
-  async updateUser(userId: number, userData: UserInterface): Promise<any> {
-    /*
-    return this.prisma.user.update({
-      where: { id: userId },
-      data: userData
-    });
-    */
+  async update(uuid: string, userData: UserInterface): Promise<InternalResponse> {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { uuid: uuid, active: true },
+      });
+      if (user) {
+        const { id, ...updatedData } = userData;
+        await this.prisma.user.update({
+          where: { uuid: uuid },
+          data: updatedData,
+        });
+        return { success: true, message: 'User updated successfully' };
+      } else {
+        return { success: false, message: 'User not found' };
+      }
+    } catch (error) {
+      this.logger.error(error);
+      return { success: false, message: 'Error updating user' };
+    }
   }
 
-  async deleteUser(uuid: number): Promise<any> {
-    /*
-    return this.prisma.user.update({
-      where: { uuid: uuid },
-      data: { deletedAt: new Date() }
-    });
-    */
+  async delete(uuid: string): Promise<InternalResponse> {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { uuid: uuid },
+      });
+      if (user) {
+        await this.prisma.user.update({
+          where: { uuid: uuid },
+          data: { active: false, deletedAt: new Date() },
+        });
+        return { success: true };
+      } else {
+        return { success: false };
+      }
+    } catch (error) {
+      this.logger.error(error);
+      return { success: false };
+    }
   }
 }

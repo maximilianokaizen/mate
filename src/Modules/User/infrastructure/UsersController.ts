@@ -82,16 +82,42 @@ export class UsersController {
   }
 
   async updateUser(req: Request, res: Response) {
-    res.status(200).send({
-      status: 'OK',
-      message: 'Usuario actualizado correctamente.'
-    });
+    try {
+      const uuidParam = req.params.userId;
+      const name = req.body.name ? new Name(req.body.name).value : undefined;
+      const lastName = req.body.lastName ? new LastName(req.body.lastName).value : undefined;
+      const password = req.body.password ? new UserPassword(req.body.password).value : undefined;
+      const active = req.body.active !== undefined ? new Active(req.body.active).value : undefined;
+      const response = await this.userService.update(uuidParam, {
+        name,
+        lastName,
+        password,
+        active,
+      });
+      if (response.success) {
+        res.status(HttpResponseCodes.OK).json(response);
+      } else {
+        res.status(HttpResponseCodes.BAD_REQUEST).json(response);
+      }
+    } catch (error) {
+      this.logger.error(error);
+      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+    }
   }
+  
 
   async deleteUser(req: Request, res: Response) {
-    res.status(200).send({
-      status: 'OK',
-      message: 'Usuario eliminado correctamente.'
-    });
+    try {
+      const uuidParam = req.params.userId;
+      const response = await this.userService.delete(uuidParam);
+      if (response.success) {
+        res.status(HttpResponseCodes.OK).json(response);
+      } else {
+        res.status(HttpResponseCodes.BAD_REQUEST).json(response);
+      }
+    } catch (error) {
+       this.logger.error(error);
+       res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+    }
   }
 }

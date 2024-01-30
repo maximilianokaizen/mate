@@ -58,21 +58,25 @@ export class UsersService {
     return await this.userRepository.getUserById(uuid);
   }
 
-  async update(userId: number, userData: any): Promise<any> {
-    /*
-        return this.prisma.user.update({
-            where: { id: userId },
-            data: userData
-        });
-        */
+  async update(uuid: string, userData: any): Promise<InternalResponse> {
+    try {
+      const existingUser = await this.getById(uuid);
+      if (existingUser.success) {
+        const updatedUserData: UserInterface = {
+          ...existingUser.user,
+          ...userData,
+        };
+        return await this.userRepository.update(uuid, updatedUserData);
+      } else {
+        return { success: false, message: 'User not found' };
+      }
+    } catch (error) {
+      this.logger.error(error);
+      return { success: false, message: 'Error updating user' };
+    }
   }
 
-  async delete(userId: number): Promise<any> {
-    /*
-        return this.prisma.user.update({
-            where: { id: userId },
-            data: { deletedAt: new Date() }
-        });
-        */
+  async delete(uuid: string): Promise<any> {
+    return await this.userRepository.delete(uuid);
   }
 }
