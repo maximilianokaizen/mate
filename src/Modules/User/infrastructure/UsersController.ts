@@ -15,6 +15,7 @@ import { UsersService } from '../application/services/UsersService';
 import Logger from '../../Shared/domain/Logger';
 import WinstonLogger from '../../Shared/infrastructure/WinstoneLogger';
 import { GeneralConstants } from '../../Shared/constants';
+const bcrypt = require('bcrypt');
 
 export class UsersController {
   private readonly userService: UsersService;
@@ -35,13 +36,14 @@ export class UsersController {
       const password = new UserPassword(req.body.password);
       const active = new Active(req.body.active);
       const createdAt = new CreatedAt(new Date());
+      const hashedPassword = await bcrypt.hash(password.value, 10);
       const response = await this.userService.create(
         uuid.valueAsString,
         name,
         lastName,
         email,
         userName,
-        password,
+        hashedPassword,
         active,
         createdAt
       );

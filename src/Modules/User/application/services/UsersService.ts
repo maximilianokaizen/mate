@@ -27,7 +27,7 @@ export class UsersService {
     lastName: LastName,
     email: Email,
     userName: UserName,
-    password: UserPassword,
+    password: string,
     active: Active,
     createdAt: CreatedAt
   ): Promise<InternalResponse> {
@@ -38,7 +38,7 @@ export class UsersService {
         lastName: lastName.value,
         email: email.value,
         user: userName.value,
-        password: password.value,
+        password,
         active: active.value,
         createdAt: createdAt.value
       };
