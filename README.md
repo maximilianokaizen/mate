@@ -112,7 +112,7 @@ curl -X POST http://localhost:3030/v1/users -H "Content-Type: application/json" 
 curl -X GET http://localhost:3030/v1/users
 ```
 
-## Ger user by UUID
+## Get user by UUID
 
 ```bash
 curl -X GET http://localhost:3030/v1/users/e2fbadaf-7f56-4a47-86d8-439e655369d8
