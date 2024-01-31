@@ -2,6 +2,10 @@
 
 A Minimalist Boilerplate for Services/Microservices, Utilizing TypeScript, DDD, and Hexagonal Architecture.
 
+## Video (spanish)
+
+https://www.youtube.com/watch?v=xEcU1bHux6k&t=3s&ab_channel=MaximilianoRossi
+
 ## Authors
 
 - [@maximilianokaizen](https://www.github.com/maximilianokaizen)
