@@ -15,6 +15,8 @@ import { UsersService } from '../application/services/UsersService';
 import Logger from '../../Shared/domain/Logger';
 import WinstonLogger from '../../Shared/infrastructure/WinstoneLogger';
 import { GeneralConstants } from '../../Shared/constants';
+import { ControllerError } from '../../Shared/domain/exceptions/ControllerException';
+
 const bcrypt = require('bcrypt');
 
 export class UsersController {
@@ -50,22 +52,39 @@ export class UsersController {
       if (response.success) {
         res.status(HttpResponseCodes.CREATED).json(response);
       } else {
-        res.status(HttpResponseCodes.BAD_REQUEST).json(response);
+        throw new ControllerError('Error creating new user', HttpResponseCodes.BAD_REQUEST);
       }
     } catch (error) {
       this.logger.error(error);
-      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      if (error instanceof ControllerError) {
+        res.status(HttpResponseCodes.BAD_REQUEST).json({ success: false });
+      } else {
+        res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      }
     }
   }
 
   async getAllUsers(req: Request, res: Response) {
-    const pageParam = req.query.page;
-    const page = new Page(parseInt(pageParam as string) || 1);
-    const response = await this.userService.getAll(page);
-    res.status(HttpResponseCodes.OK).send({
-      status: GeneralConstants.STATUS_OK,
-      users: response.users
-    });
+    try {
+      const pageParam = req.query.page;
+      const page = new Page(parseInt(pageParam as string) || 1);
+      const response = await this.userService.getAll(page);
+      if (response.success) {
+        res.status(HttpResponseCodes.OK).send({
+          status: GeneralConstants.STATUS_OK,
+          users: response.users
+        });
+      } else {
+        throw new ControllerError('Error geeting all users', HttpResponseCodes.BAD_REQUEST);
+      }
+    } catch (error) {
+      this.logger.error(error);
+      if (error instanceof ControllerError) {
+        res.status(HttpResponseCodes.BAD_REQUEST).json({ success: false });
+      } else {
+        res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      }
+    }
   }
 
   async getUserById(req: Request, res: Response) {
@@ -75,11 +94,15 @@ export class UsersController {
       if (response.success) {
         res.status(HttpResponseCodes.OK).json(response);
       } else {
-        res.status(HttpResponseCodes.BAD_REQUEST).json(response);
+        throw new ControllerError('Error get user by uuid', HttpResponseCodes.BAD_REQUEST);
       }
     } catch (error) {
       this.logger.error(error);
-      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      if (error instanceof ControllerError) {
+        res.status(HttpResponseCodes.BAD_REQUEST).json({ success: false });
+      } else {
+        res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      }
     }
   }
 
@@ -103,7 +126,11 @@ export class UsersController {
       }
     } catch (error) {
       this.logger.error(error);
-      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      if (error instanceof ControllerError) {
+        res.status(HttpResponseCodes.BAD_REQUEST).json({ success: false });
+      } else {
+        res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      }
     }
   }
 
@@ -114,11 +141,15 @@ export class UsersController {
       if (response.success) {
         res.status(HttpResponseCodes.OK).json(response);
       } else {
-        res.status(HttpResponseCodes.BAD_REQUEST).json(response);
+        throw new ControllerError('Error trying delete a specific user', HttpResponseCodes.BAD_REQUEST);
       }
     } catch (error) {
       this.logger.error(error);
-      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      if (error instanceof ControllerError) {
+        res.status(HttpResponseCodes.BAD_REQUEST).json({ success: false });
+      } else {
+        res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      }
     }
   }
 
@@ -131,11 +162,15 @@ export class UsersController {
       if (response.success) {
         res.status(HttpResponseCodes.OK).json(response);
       } else {
-        res.status(HttpResponseCodes.UNAUTHORIZED).json(response);
+        throw new ControllerError('Error in auth user', HttpResponseCodes.BAD_REQUEST);
       }
     } catch (error) {
       this.logger.error(error);
-      res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      if (error instanceof ControllerError) {
+        res.status(HttpResponseCodes.BAD_REQUEST).json({ success: false });
+      } else {
+        res.status(HttpResponseCodes.INTERNAL_SERVER_ERROR).json({ success: false });
+      }
     }
   }
 }
