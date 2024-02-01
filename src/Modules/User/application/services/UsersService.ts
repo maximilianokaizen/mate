@@ -1,4 +1,3 @@
-/* Value Objects */
 import { Name } from '../../../Shared/domain/value-object/User/Name';
 import { LastName } from '../../../Shared/domain/value-object/User/LastName';
 import { Email } from '../../../Shared/domain/value-object/Email';
