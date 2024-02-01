@@ -63,7 +63,6 @@ docker-compose up --build -d
 npx prisma init
 npx prisma generate 
 npx prisma migrate dev
-npx prisma db seed
 ```
 
 #### 5. Run mate with 
