@@ -69,7 +69,7 @@ if all it's ok, you will in console this message.
 
 ![image](https://github.com/maximilianokaizen/mate/assets/148482605/ca84f625-de33-414f-b2ee-f8366487532e)
 
-A new user was created. And not is.. John Wick!
+A new user was created. And is.. John Wick!
 
 #### 5. Run mate with 
 
