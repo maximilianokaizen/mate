@@ -12,6 +12,8 @@ import { UserRepository } from '../../model/repositories/UserRepository';
 import WinstonLogger from '../../../Shared/infrastructure/WinstoneLogger';
 import Logger from '../../../Shared/domain/Logger';
 import { Constants } from '../../Shared/constants';
+import { CaseUseException } from '../../../Shared/domain/exceptions/CaseUseException';
+
 const bcrypt = require('bcrypt');
 
 export class UsersService {
@@ -46,13 +48,17 @@ export class UsersService {
       return await this.userRepository.create(user);
     } catch (error) {
       this.logger.error(error);
-      throw error;
+      throw new CaseUseException('Error creating user');
     }
   }
 
   async getAll(page: Page): Promise<any> {
     const perPage = Constants.RECORDS_PER_PAGE;
-    return await this.userRepository.getAll(page.getValue(), perPage);
+    try {
+      return await this.userRepository.getAll(page.getValue(), perPage);
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 
   async getById(uuid: string): Promise<any> {
