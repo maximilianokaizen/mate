@@ -1,10 +1,11 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { UserInterface } from '../../model/interfaces/UserInterface';
 import Logger from '../../../Shared/domain/Logger';
 import WinstonLogger from '../../../Shared/infrastructure/WinstoneLogger';
 import { InternalResponse } from '../../../Shared/dto/InternalResponse';
 import { UsersInterface } from '../interfaces/UsersInterface';
 import { OneUserInterface } from '../interfaces/OneUserInterface';
+
 export class UserRepository {
   private prisma: PrismaClient;
   private readonly logger: Logger;
@@ -21,6 +22,8 @@ export class UserRepository {
       return { success: true, message: 'User created successfully' };
     } catch (error) {
       this.logger.error(error);
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      }
       return { success: false, message: 'Error creating user' };
     }
   }
