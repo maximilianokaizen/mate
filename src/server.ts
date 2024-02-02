@@ -25,7 +25,6 @@ export class Server {
     router.use(cors());
     router.use(errorHandler());
     this.express.use(routes);
-    this.express.use(router);
     router.use((err: Error, req: Request, res: Response, next: Function) => {
       this.logger.error(err);
       res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);

@@ -29,6 +29,9 @@ export class UsersController {
   }
 
   async createUser(req: Request, res: Response) {
+    console.log('---------------');
+    console.log('req.body =>', req.body);
+    console.log('---------------');
     try {
       const uuid = new Uuid(uuidv4());
       const name = new Name(req.body.name);
@@ -50,7 +53,10 @@ export class UsersController {
         createdAt
       );
       if (response.success) {
-        res.status(HttpResponseCodes.CREATED).json(response);
+        res.status(HttpResponseCodes.CREATED).json({
+          response,
+          uuid
+        });
       } else {
         throw new ControllerError('Error creating new user', HttpResponseCodes.BAD_REQUEST);
       }
