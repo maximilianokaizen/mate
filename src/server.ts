@@ -8,7 +8,8 @@ import Logger from './Modules/Shared/domain/Logger';
 import WinstonLogger from './Modules/Shared/infrastructure/WinstoneLogger';
 import cors from 'cors';
 import routes from './Routes/routes';
-
+import swaggerUi from 'swagger-ui-express';
+const swaggerOutput = require('./swagger_output.json');
 export class Server {
   private express: express.Express;
   readonly port: string;
@@ -25,6 +26,7 @@ export class Server {
     router.use(cors());
     router.use(errorHandler());
     this.express.use(routes);
+    this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
     router.use((err: Error, req: Request, res: Response, next: Function) => {
       this.logger.error(err);
       res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
