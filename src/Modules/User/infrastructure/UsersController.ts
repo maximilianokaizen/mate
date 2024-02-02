@@ -29,9 +29,6 @@ export class UsersController {
   }
 
   async createUser(req: Request, res: Response) {
-    console.log('---------------');
-    console.log('req.body =>', req.body);
-    console.log('---------------');
     try {
       const uuid = new Uuid(uuidv4());
       const name = new Name(req.body.name);
