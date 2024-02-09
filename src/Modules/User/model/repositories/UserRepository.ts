@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { UserInterface } from '../../model/interfaces/UserInterface';
 import Logger from '../../../Shared/domain/Logger';
 import WinstonLogger from '../../../Shared/infrastructure/WinstoneLogger';
@@ -17,13 +17,11 @@ export class UserRepository {
 
   async create(userData: UserInterface): Promise<InternalResponse> {
     try {
-      const { id, ...createData } = userData;
+      const { id, ...createData } = userData; // eslint-disable-line @typescript-eslint/no-unused-vars
       await this.prisma.user.create({ data: createData });
       return { success: true, message: 'User created successfully' };
     } catch (error) {
       this.logger.error(error);
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      }
       return { success: false, message: 'Error creating user' };
     }
   }
@@ -70,7 +68,7 @@ export class UserRepository {
         where: { uuid: uuid, active: true }
       });
       if (user) {
-        const { id, ...updatedData } = userData;
+        const { id, ...updatedData } = userData; // eslint-disable-line @typescript-eslint/no-unused-vars
         await this.prisma.user.update({
           where: { uuid: uuid },
           data: updatedData

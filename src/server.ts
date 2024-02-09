@@ -9,7 +9,7 @@ import WinstonLogger from './Modules/Shared/infrastructure/WinstoneLogger';
 import cors from 'cors';
 import routes from './Routes/routes';
 import swaggerUi from 'swagger-ui-express';
-const swaggerOutput = require('./swagger_output.json');
+const swaggerOutput = require('./swagger_output.json'); // eslint-disable-line @typescript-eslint/no-var-requires
 export class Server {
   private express: express.Express;
   readonly port: string;
@@ -27,7 +27,7 @@ export class Server {
     router.use(errorHandler());
     this.express.use(routes);
     this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
-    router.use((err: Error, req: Request, res: Response, next: Function) => {
+    router.use((err: Error, req: Request, res: Response) => {
       this.logger.error(err);
       res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
     });

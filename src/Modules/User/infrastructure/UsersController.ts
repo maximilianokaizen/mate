@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
-/* Value Objects */
 import { Name } from '../../Shared/domain/value-object/User/Name';
 import { LastName } from '../../Shared/domain/value-object/User/LastName';
 import { Email } from '../../Shared/domain/value-object/Email';
@@ -16,8 +15,8 @@ import Logger from '../../Shared/domain/Logger';
 import WinstonLogger from '../../Shared/infrastructure/WinstoneLogger';
 import { GeneralConstants } from '../../Shared/constants';
 import { ControllerError } from '../../Shared/domain/exceptions/ControllerException';
-
-const bcrypt = require('bcrypt');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const bcrypt = require('bcrypt'); 
 
 export class UsersController {
   private readonly userService: UsersService;
@@ -50,10 +49,7 @@ export class UsersController {
         createdAt
       );
       if (response.success) {
-        res.status(HttpResponseCodes.CREATED).json({
-          response,
-          uuid
-        });
+        res.status(HttpResponseCodes.CREATED).json(response);
       } else {
         throw new ControllerError('Error creating new user', HttpResponseCodes.BAD_REQUEST);
       }
