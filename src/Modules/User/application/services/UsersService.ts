@@ -13,7 +13,7 @@ import Logger from '../../../Shared/domain/Logger';
 import { Constants } from '../../Shared/constants';
 import { CaseUseException } from '../../../Shared/domain/exceptions/CaseUseException';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 
 export class UsersService {
   private readonly userRepository: UserRepository;

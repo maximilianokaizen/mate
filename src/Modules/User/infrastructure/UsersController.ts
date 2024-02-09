@@ -16,7 +16,7 @@ import WinstonLogger from '../../Shared/infrastructure/WinstoneLogger';
 import { GeneralConstants } from '../../Shared/constants';
 import { ControllerError } from '../../Shared/domain/exceptions/ControllerException';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 
 export class UsersController {
   private readonly userService: UsersService;
