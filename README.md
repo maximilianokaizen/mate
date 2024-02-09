@@ -17,9 +17,11 @@ https://www.youtube.com/watch?v=xEcU1bHux6k&t=3s&ab_channel=MaximilianoRossi
 - Application / Domain / Infrastructure layers
 - Controllers, Services and Repositories
 - Test E2E (JEST)
-- Prettier as Linter
-- TS Std Configuration
+- Prettier for Code Style 
+- Eslint as linter
+- TS Configuration
 - Prisma as ORM
+- Swagger for API Documentation
 - Winston for logs
 - Nodemon
 - DockerFile and docker-compose
