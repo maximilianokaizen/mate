@@ -18,6 +18,16 @@ export class UserRepository {
   async create(userData: UserInterface): Promise<InternalResponse> {
     try {
       const { id, ...createData } = userData; // eslint-disable-line @typescript-eslint/no-unused-vars
+
+      // Validaciones de base de datos
+      const { user: userByEmail } = await this.getByEmail(userData.email);
+      if (userByEmail) return { success: false, message: 'User already exists' };
+
+      // Validaciones del negocio
+      if(userData.email === 'ejemplo@gmail.com') return { success: false, message: 'Email not allowed' };
+      if(userData.name === 'Ejemplo') return { success: false, message: 'Name not allowed' };
+      // etc...
+
       await this.prisma.user.create({ data: createData });
       return { success: true, message: 'User created successfully' };
     } catch (error) {
